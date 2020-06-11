@@ -1,4 +1,7 @@
-import React from "react";
+import React, { useEffect } from "react";
+import { connect } from "react-redux";
+import PropTypes from "prop-types";
+import * as authActions from "../store/actions/auth/authActions";
 
 const inputTextfield = {
   fontFamily: "inherit",
@@ -15,6 +18,8 @@ const inputTextfield = {
 };
 
 const Order = (props) => {
+  useEffect(() => {}, []);
+
   const handleSubmit = (event) => {
     event.preventDefault();
     console.log("submited");
@@ -22,7 +27,7 @@ const Order = (props) => {
   };
   return (
     <>
-      <h1>New Coffee Order</h1>
+      <h1 id="order-title">New Coffee Order</h1>
       <h3>Submit an order below and grab your coffee</h3>
       <div id="order-body">
         <div id="order-form-container">
@@ -33,7 +38,7 @@ const Order = (props) => {
                 style={inputTextfield}
                 type="text"
                 name="name"
-                placeholder="Your Number"
+                placeholder="Your Name"
               ></input>
             </div>
             <div className="ray-text-area">
@@ -61,7 +66,7 @@ const Order = (props) => {
                   Choose milk
                 </option>
                 <option value="coffee2">Skimmed</option>
-                <option value="coffee3">20%</option>
+                <option value="coffee3">2%</option>
                 <option value="coffee4">Full</option>
               </select>
             </div>
@@ -79,4 +84,20 @@ const Order = (props) => {
   );
 };
 
-export default Order;
+const mapStateToProps = (state) => {
+  return {
+    authMSP: state.auth.authRootReducer,
+  };
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    verifyMDP: (token) => dispatch(authActions.loginThunk(token)),
+  };
+};
+
+Order.propTypes = {
+  className: PropTypes.string,
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Order);
