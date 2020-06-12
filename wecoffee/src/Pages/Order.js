@@ -2,6 +2,8 @@ import React, { useEffect } from "react";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import * as authActions from "../store/actions/auth/authActions";
+import * as milkActions from "../store/actions/milk/milkActions";
+import * as coffeeActions from "../store/actions/coffee/coffeeActions";
 
 const inputTextfield = {
   fontFamily: "inherit",
@@ -18,13 +20,19 @@ const inputTextfield = {
 };
 
 const Order = (props) => {
-  useEffect(() => {}, []);
+  useEffect(() => {
+    props.coffeeMDP();
+    props.milkMDP();
+  }, [props]);
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    console.log("submited");
     props.history.push("/order-submitted");
   };
+
+  console.log(props.coffeeMSP);
+  console.log(props.milkMSP);
+
   return (
     <>
       <h1 id="order-title">New Coffee Order</h1>
@@ -87,12 +95,16 @@ const Order = (props) => {
 const mapStateToProps = (state) => {
   return {
     authMSP: state.auth.authRootReducer,
+    coffeeMSP: state.coffee.coffeeRootReducer,
+    milkMSP: state.milk.milkRootReducer,
   };
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
     verifyMDP: (token) => dispatch(authActions.loginThunk(token)),
+    coffeeMDP: () => dispatch(coffeeActions.loadCoffee()),
+    milkMDP: () => dispatch(milkActions.loadMilk()),
   };
 };
 
