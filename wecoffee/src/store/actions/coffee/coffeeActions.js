@@ -22,3 +22,31 @@ export function loadCoffee(token) {
       });
   };
 }
+
+export function addOrder(
+  coffeeId,
+  coffeeName,
+  milkId,
+  milkName,
+  name,
+  officeId
+) {
+  return (dispatch) => {
+    console.log(coffeeId, coffeeName, milkId, milkName, name, officeId);
+    return axios
+      .post(`${process.env.REACT_APP_API_SERVER}/orders/add-order`, {
+        coffeeId: coffeeId,
+        coffeeName: coffeeName,
+        milkId: milkId,
+        milkName: milkName,
+        name: name,
+        officeId: officeId,
+      })
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((err) => {
+        console.error(err);
+      });
+  };
+}

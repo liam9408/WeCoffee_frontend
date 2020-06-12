@@ -23,7 +23,7 @@ const Admin = (props) => {
   useEffect(() => {
     props.coffeeMDP();
     props.milkMDP();
-  }, [props]);
+  }, []);
 
   return (
     <>
@@ -45,23 +45,19 @@ const Admin = (props) => {
             </div>
             <button className="admin-add-button">Add</button>
           </div>
-          {/* DELETE ITEMS */}
-          <div className="delete-items">
-            <h2 className="edit-item-name">Iced Latte</h2>
-            <button className="delete-button">Delete</button>
-          </div>
-          <div className="delete-items">
-            <h2 className="edit-item-name">Hot Latte</h2>
-            <button className="delete-button">Delete</button>
-          </div>
-          <div className="delete-items">
-            <h2 className="edit-item-name">Iced Americano</h2>
-            <button className="delete-button">Delete</button>
-          </div>
-          <div className="delete-items">
-            <h2 className="edit-item-name">Hot Americano</h2>
-            <button className="delete-button">Delete</button>
-          </div>
+
+          {props.coffeeMSP.map((item, index) => {
+            return (
+              <>
+                <div className="delete-items">
+                  <h2 className="edit-item-name">{item.name}</h2>
+                  <button className="delete-button" id={item.id}>
+                    Delete
+                  </button>
+                </div>
+              </>
+            );
+          })}
         </div>
         <div className="with-image">
           <div id="milk-icon"></div>
@@ -78,18 +74,18 @@ const Admin = (props) => {
             </div>
             <button className="admin-add-button">Add</button>
           </div>
-          <div className="delete-items">
-            <h2 className="edit-item-name">Normal Milk</h2>
-            <button className="delete-button">Delete</button>
-          </div>
-          <div className="delete-items">
-            <h2 className="edit-item-name">2% Milk</h2>
-            <button className="delete-button">Delete</button>
-          </div>
-          <div className="delete-items">
-            <h2 className="edit-item-name">Skimmed Milk</h2>
-            <button className="delete-button">Delete</button>
-          </div>
+          {props.milkMSP.map((item, index) => {
+            return (
+              <>
+                <div className="delete-items">
+                  <h2 className="edit-item-name">{item.type}</h2>
+                  <button className="delete-button" id={item.id}>
+                    Delete
+                  </button>
+                </div>
+              </>
+            );
+          })}
         </div>
       </div>
     </>
