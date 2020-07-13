@@ -6,8 +6,9 @@ import OrderSubmitted from "./Pages/OrderSubmitted";
 import NotFound from "./Pages/NotFound";
 import Barista from "./Pages/Barista";
 import Admin from "./Pages/Admin";
+import Login from "./Pages/Login";
 
-// import * as authActions from "../src/store/actions/auth/authActions";
+import * as authActions from "../src/store/actions/auth/authActions";
 
 const Routes = (props) => {
   return (
@@ -16,9 +17,11 @@ const Routes = (props) => {
       <Route exact path="/order-submitted" component={OrderSubmitted} />
       <Route exact path="/barista" component={Barista} />
       <Route exact path="/admin" component={Admin} />
+      <Route exact path="/login" component={Login} />
       <Route path="*" component={NotFound} />
     </Switch>
   );
+  // return <Route exact path="/login" component={Login} />;
   //   if (props.isLoggedIn) {
   //     return (
   //       <Switch>
@@ -60,13 +63,13 @@ const Routes = (props) => {
 };
 
 const mapStateToProps = (state) => ({
-  //   isLoggedIn: state.auth.isLoggedIn,
-  //   token: state.auth.token,
+  isLoggedIn: state.auth.isLoggedIn,
+  token: state.auth.token,
 });
 
 const mapDispatchToProps = (dispatch) => ({
   logoutDispatch: () => {
-    // dispatch(authActions.logoutAction());
+    dispatch(authActions.logoutAction());
   },
 });
 
