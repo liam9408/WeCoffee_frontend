@@ -16,11 +16,11 @@ export function logoutAction() {
   };
 }
 
-export function loginThunk(email, password) {
+export function loginThunk(username, password) {
   return (dispatch) => {
     return axios
       .post(`${process.env.REACT_APP_API_SERVER}/login/login`, {
-        email: email,
+        username: username,
         password: password,
       })
       .then((response) => {
@@ -39,20 +39,19 @@ export function loginThunk(email, password) {
   };
 }
 
-export function signupThunk(firstName, lastName, email, password) {
+export function signupThunk(username, usertype, password) {
   return (dispatch) => {
     return axios
       .post(`${process.env.REACT_APP_API_SERVER}/login/signup`, {
-        fName: firstName,
-        lName: lastName,
-        email: email,
+        username: username,
+        usertype: usertype,
         password: password,
       })
       .then((response) => {
         console.log(response.data);
         if (response.data.success === 1) {
           // thunk can conditionally dispatch action
-          dispatch(loginThunk(email, password));
+          dispatch(loginThunk(username, password));
         } else {
           // you can dispatch other actions here if needed
           // for example, to show a error message in a modal

@@ -7,8 +7,6 @@ import "./App.css";
 function App() {
   return (
     <div className="App" id="main-body">
-      {/* <h1>WeCoffee</h1> */}
-      <div id="logo"></div>
       <BrowserRouter>
         <Routes />
       </BrowserRouter>

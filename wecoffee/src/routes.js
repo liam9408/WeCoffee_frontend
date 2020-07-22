@@ -7,6 +7,8 @@ import NotFound from "./Pages/NotFound";
 import Barista from "./Pages/Barista";
 import Admin from "./Pages/Admin";
 import Login from "./Pages/Login";
+import UserLogin from "./Pages/UserLogin";
+import Signup from "./Pages/SignUp";
 
 import * as authActions from "../src/store/actions/auth/authActions";
 
@@ -18,6 +20,8 @@ const Routes = (props) => {
       <Route exact path="/barista" component={Barista} />
       <Route exact path="/admin" component={Admin} />
       <Route exact path="/login" component={Login} />
+      <Route exact path="/SignUp" component={Signup} />
+      <Route exact path="/us3rl0g1n" component={UserLogin} />
       <Route path="*" component={NotFound} />
     </Switch>
   );
@@ -65,6 +69,7 @@ const Routes = (props) => {
 const mapStateToProps = (state) => ({
   isLoggedIn: state.auth.isLoggedIn,
   token: state.auth.token,
+  userType: state.auth.userType,
 });
 
 const mapDispatchToProps = (dispatch) => ({
