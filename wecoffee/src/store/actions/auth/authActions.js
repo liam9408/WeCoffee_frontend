@@ -1,11 +1,13 @@
 import axios from "axios";
 import { LOGIN, LOGOUT } from "./authActionTypes";
 
-function loginSuccessAction(token, id) {
+function loginSuccessAction(token, id, userType) {
   return {
     type: LOGIN,
     token: token,
+    //* need id?
     id: id,
+    userType: userType,
   };
 }
 
@@ -27,9 +29,10 @@ export function loginThunk(username, password) {
         if (response.data.success === 1) {
           // thunk can conditionally dispatch actions
           localStorage.setItem("token", response.data.token);
+
+          //* need id?
           localStorage.setItem("id", response.data.id);
-          localStorage.setItem("fName", response.data.fName);
-          localStorage.setItem("lName", response.data.lName);
+          localStorage.setItem("userType", response.data.userType);
           dispatch(loginSuccessAction(response.data.token, response.data.id));
         } else {
           console.log("failed");
@@ -39,22 +42,19 @@ export function loginThunk(username, password) {
   };
 }
 
-export function signupThunk(username, usertype, password) {
+export function signupThunk(username, userType, password) {
+  console.log(username, userType, password);
   return (dispatch) => {
     return axios
       .post(`${process.env.REACT_APP_API_SERVER}/login/signup`, {
         username: username,
-        usertype: usertype,
+        userType: userType,
         password: password,
       })
       .then((response) => {
-        console.log(response.data);
         if (response.data.success === 1) {
           // thunk can conditionally dispatch action
           dispatch(loginThunk(username, password));
-        } else {
-          // you can dispatch other actions here if needed
-          // for example, to show a error message in a modal
         }
       })
       .catch((err) => console.log("Error: ", err));

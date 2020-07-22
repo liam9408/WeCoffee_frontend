@@ -3,6 +3,8 @@ import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import * as authActions from "../store/actions/auth/authActions";
 
+import OrderCard from "../Components/OrderCard";
+
 const Barista = (props) => {
   const [data, setData] = React.useState([]);
 
@@ -17,18 +19,22 @@ const Barista = (props) => {
     eventSource.onmessage = (e) => updateCoffeeList(JSON.parse(e.data));
   }, []);
 
-  console.log(data);
-
   return (
     <>
       <h1>8 Orders In Queue</h1>
-      <div className="order-card">
+      <OrderCard type="Iced Latte w/ 2% Milk" name="Liam Leung" />
+      <OrderCard type="Iced Americano" name="Liam Leung" />
+      <OrderCard type="Hot Americano" name="Liam Leung" />
+      <OrderCard type="Iced Latte w/ 2% Milk" name="Liam Leung" />
+      <OrderCard type="Hot Latte w/ Normal Milk" name="Liam Leung" />
+
+      {/* <div className="order-card">
         <div className="order-content">
           <h2 className="order-type">Iced Latte w/ 2% Milk</h2>
           <h4 className="order-name">Liam Leung</h4>
         </div>
         <button className="done-button">Done</button>
-      </div>
+      </div> 
       <div className="order-card">
         <div className="order-content">
           <h2 className="order-type">Hot Latte w/ Normal Milk</h2>
@@ -56,7 +62,7 @@ const Barista = (props) => {
           <h4 className="order-name">Liam Leung</h4>
         </div>
         <button className="done-button">Done</button>
-      </div>
+      </div> */}
       <div id="spacer"></div>
     </>
   );

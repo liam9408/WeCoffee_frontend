@@ -6,6 +6,10 @@ import * as milkActions from "../store/actions/milk/milkActions";
 import * as coffeeActions from "../store/actions/coffee/coffeeActions";
 import * as officeActions from "../store/actions/office/officeActions";
 
+import Input from "../Components/Input";
+import AutoCompleteInput from "../Components/AutoCompleteInput";
+import Select from "../Components/Select";
+
 const inputTextfield = {
   fontFamily: "inherit",
   borderRadius: ".25rem;",
@@ -33,6 +37,7 @@ const Order = (props) => {
   const [coffee, setCoffee] = useState("");
   const [milk, setMilk] = useState("");
   const [officeSuggestions, setOfficeSuggestions] = useState([]);
+  const [submitted, setSubmitted] = useState(false);
   const [isHidden, setHidden] = useState(true);
 
   let isEnabled =
@@ -50,8 +55,8 @@ const Order = (props) => {
     const coffeeName = coffee.slice(1, coffee.length);
     const milkId = parseInt(milk[0]);
     const milkType = milk.slice(1, milk.length);
+    setSubmitted(true);
     props.addOrderMDP(coffeeId, coffeeName, milkId, milkType, name, officeId);
-    // props.history.push("/order-submitted");
   };
 
   const handleOfficeChange = (e) => {
@@ -97,105 +102,73 @@ const Order = (props) => {
 
   return (
     <>
-      <h1 id="order-title">New Coffee Order</h1>
-      <h3>Submit an order below and grab your coffee</h3>
-      <div id="order-body">
-        <div id="order-form-container">
-          <form id="form">
-            <div className="ray-text-area">
-              <input
-                className="input-textfield"
-                style={inputTextfield}
-                type="text"
-                name="name"
-                placeholder="Your Name (required)"
-                id="your-name"
-                onChange={handleNameChange}
-              ></input>
-            </div>
-            <div className="ray-text-area" id="autocomplete-container">
-              <input
-                className="input-textfield"
-                style={inputTextfield}
-                type="text"
-                name="office-number"
-                value={officeNumber}
-                placeholder="Office Number (required)"
-                id="office-number"
-                onChange={handleOfficeChange}
-              ></input>
-              <div id="search-list" hidden={isHidden}>
-                {officeSuggestions.map((item, index) => {
-                  return (
-                    <>
-                      <li
-                        className="search-items"
-                        onClick={autoCompleteHandleClick}
-                        id={item.number}
-                        value={item.id}
-                      >
-                        {item.number}
-                      </li>
-                    </>
-                  );
-                })}
-              </div>
-            </div>
-            <div className="ray-text-area">
-              <select
-                className="selector"
-                type="text"
-                name="coffee"
-                id="coffee"
-                onChange={handleCoffeeChange}
-              >
-                <option value="coffee1" disabled selected>
-                  Choose coffee
-                </option>
-                {props.coffeeMSP.map((item, index) => {
-                  return (
-                    <>
-                      <option value={item.id + item.name}>{item.name}</option>
-                    </>
-                  );
-                })}
-              </select>
-            </div>
-            <div className="ray-text-area">
-              <select
-                className="selector"
-                type="text"
-                name="milk"
-                id="milk"
-                onChange={handleMilkChange}
-              >
-                <option value="coffee1" disabled selected>
-                  Choose milk
-                </option>
-                {props.milkMSP.map((item, index) => {
-                  return (
-                    <>
-                      <option value={item.id + item.type}>{item.type}</option>
-                    </>
-                  );
-                })}
-              </select>
-            </div>
+      {!submitted && (
+        <>
+          <h1 id="order-title">New Coffee Order</h1>
+          <h3>Submit an order below and grab your coffee</h3>
+          <div id="order-body">
+            <div id="order-form-container">
+              <form id="form">
+                <Input
+                  type="text"
+                  name="name"
+                  placeholder="Your Name (required)"
+                  id="your-name"
+                  onChange={handleNameChange}
+                />
+                <AutoCompleteInput
+                  style={inputTextfield}
+                  type="text"
+                  name="office-number"
+                  value={officeNumber}
+                  placeholder="Office Number (required)"
+                  id="office-number"
+                  onChange={handleOfficeChange}
+                  isHidden={isHidden}
+                  suggestions={officeSuggestions}
+                  onClick={autoCompleteHandleClick}
+                />
 
-            <input
-              id={
-                !isEnabled
-                  ? "order-submit-button-disabled"
-                  : "order-submit-button"
-              }
-              type="submit"
-              value="Submit Order"
-              onClick={handleSubmit}
-              disabled={!isEnabled}
-            ></input>
-          </form>
-        </div>
-      </div>
+                <Select
+                  type="text"
+                  name="coffee"
+                  id="coffee"
+                  onChange={handleCoffeeChange}
+                  options={props.coffeeMSP}
+                />
+                <Select
+                  type="text"
+                  name="milk"
+                  id="milk"
+                  onChange={handleMilkChange}
+                  options={props.milkMSP}
+                />
+                <input
+                  id={
+                    !isEnabled
+                      ? "order-submit-button-disabled"
+                      : "order-submit-button"
+                  }
+                  type="submit"
+                  value="Submit Order"
+                  onClick={handleSubmit}
+                  disabled={!isEnabled}
+                ></input>
+              </form>
+            </div>
+          </div>
+        </>
+      )}
+      {submitted && (
+        <>
+          <h1>Success!</h1>
+          <h3>
+            Your order has been submitted. Please collect your order on the 20th
+            floor.
+          </h3>
+          <a href="/">Place another order</a>
+        </>
+      )}
     </>
   );
 };

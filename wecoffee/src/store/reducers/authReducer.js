@@ -3,7 +3,9 @@ import { LOGIN, LOGOUT } from "../actions/auth/authActionTypes";
 const initialState = {
   isLoggedIn: localStorage.getItem("token") !== null,
   token: localStorage.getItem("token") || null,
+  //* need id?
   id: localStorage.getItem("id") || null,
+  userType: localStorage.getItem("userType") || null,
 };
 
 function loginReducer(state, action) {
@@ -11,7 +13,9 @@ function loginReducer(state, action) {
     ...state,
     isLoggedIn: true,
     token: action.token,
+    //* need id?
     id: action.id,
+    userType: action.userType,
   };
 }
 

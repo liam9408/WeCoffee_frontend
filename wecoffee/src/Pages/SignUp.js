@@ -39,7 +39,7 @@ const SignUp = (props) => {
   };
 
   const handleSubmit = () => {
-    props.verifyMDP(username, userType, password);
+    props.signUpMDP(username, userType, password);
   };
 
   return (
@@ -113,7 +113,8 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    verifyMDP: (token) => dispatch(authActions.loginThunk(token)),
+    signUpMDP: (username, userType, password) =>
+      dispatch(authActions.signupThunk(username, userType, password)),
   };
 };
 

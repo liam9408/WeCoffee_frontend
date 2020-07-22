@@ -2,7 +2,6 @@ import React from "react";
 import { Switch, Redirect, Route } from "react-router-dom";
 import { connect } from "react-redux";
 import Order from "./Pages/Order";
-import OrderSubmitted from "./Pages/OrderSubmitted";
 import NotFound from "./Pages/NotFound";
 import Barista from "./Pages/Barista";
 import Admin from "./Pages/Admin";
@@ -16,7 +15,6 @@ const Routes = (props) => {
   return (
     <Switch>
       <Route exact path="/" component={Order} />
-      <Route exact path="/order-submitted" component={OrderSubmitted} />
       <Route exact path="/barista" component={Barista} />
       <Route exact path="/admin" component={Admin} />
       <Route exact path="/login" component={Login} />
@@ -25,6 +23,12 @@ const Routes = (props) => {
       <Route path="*" component={NotFound} />
     </Switch>
   );
+
+  // if isLoggedIn allow access to pages
+  // check userType and render corresponding pages
+
+  // if !isLoggedIn return to userlogin
+
   // return <Route exact path="/login" component={Login} />;
   //   if (props.isLoggedIn) {
   //     return (
