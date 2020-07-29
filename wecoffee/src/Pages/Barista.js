@@ -30,7 +30,6 @@ const Barista = (props) => {
   };
 
   const onDone = (orderId) => {
-    console.log(orderId);
     return axios({
       method: "put",
       url: `${process.env.REACT_APP_API_SERVER}/orders/done`,
@@ -49,7 +48,7 @@ const Barista = (props) => {
 
   useEffect(() => {
     getOrders(token);
-  }, []);
+  }, [getOrders]);
 
   return (
     <>

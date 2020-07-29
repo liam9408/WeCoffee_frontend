@@ -10,8 +10,12 @@ export function refreshOfficeThunk(office) {
 
 export function loadOffice(token) {
   return (dispatch) => {
-    return axios(`${process.env.REACT_APP_API_SERVER}/office/get-office/`, {
-      //   headers: { Authorization: `Bearer ${token}` },
+    return axios({
+      method: "get",
+      url: `${process.env.REACT_APP_API_SERVER}/office/get-office`,
+      headers: {
+        Authorization: `${token}`,
+      },
     })
       .then((res) => {
         dispatch(refreshOfficeThunk(res.data));

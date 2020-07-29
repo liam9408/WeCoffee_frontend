@@ -1,5 +1,6 @@
 import axios from "axios";
 import * as coffeeActionTypes from "./coffeeActionTypes";
+import { toast } from "react-toastify";
 
 export function refreshCoffeeThunk(coffee) {
   return {
@@ -30,6 +31,20 @@ export function addOrder(
   name,
   officeId
 ) {
+  console.log(
+    coffeeId,
+    "coffeeId",
+    coffeeName,
+    "coffeeName",
+    milkId,
+    "milkId",
+    milkName,
+    "milkName",
+    name,
+    "name",
+    officeId,
+    "officeId"
+  );
   return (dispatch) => {
     return axios
       .post(`${process.env.REACT_APP_API_SERVER}/orders/add-order`, {
@@ -51,13 +66,35 @@ export function addOrder(
 
 export function addCoffee(token, coffee) {
   return (dispatch) => {
-    return axios
-      .post(`${process.env.REACT_APP_API_SERVER}/menu/add-coffee/`, {
-        headers: { Authorization: `${token}` },
-        coffeeName: coffee,
-      })
+    return axios({
+      method: "post",
+      url: `${process.env.REACT_APP_API_SERVER}/menu/add-coffee/`,
+      data: { coffeeName: `${coffee}` },
+      headers: {
+        Authorization: `${token}`,
+      },
+    })
       .then((res) => {
-        console.log(res);
+        toast.success("Added Coffee");
+      })
+      .catch((err) => {
+        console.error(err);
+      });
+  };
+}
+
+export function delCoffee(token, coffeeId) {
+  return (dispatch) => {
+    return axios({
+      method: "delete",
+      url: `${process.env.REACT_APP_API_SERVER}/menu/del-coffee/`,
+      data: { coffeeId: coffeeId },
+      headers: {
+        Authorization: `${token}`,
+      },
+    })
+      .then((res) => {
+        toast.success("Deleted Coffee");
       })
       .catch((err) => {
         console.error(err);

@@ -43,6 +43,14 @@ const Order = (props) => {
   const [submitted, setSubmitted] = useState(false);
   const [isHidden, setHidden] = useState(true);
 
+  let open = false;
+
+  let now = new Date().getHours();
+
+  if (now >= 5 || now < 10) {
+    open = true;
+  }
+
   let isEnabled =
     name.length > 0 &&
     officeNumber.length > 0 &&
@@ -102,6 +110,10 @@ const Order = (props) => {
   const handleNameChange = (e) => {
     setName(e.target.value);
   };
+
+  if (open === false) {
+    return <h1>We are not yet open. Please come back later.</h1>;
+  }
 
   return (
     <>

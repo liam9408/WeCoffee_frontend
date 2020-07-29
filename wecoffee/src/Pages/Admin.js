@@ -7,6 +7,8 @@ import NavBar from "../Components/NavBar";
 import * as authActions from "../store/actions/auth/authActions";
 import * as milkActions from "../store/actions/milk/milkActions";
 import * as coffeeActions from "../store/actions/coffee/coffeeActions";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const inputTextfield = {
   fontFamily: "inherit",
@@ -25,13 +27,13 @@ const inputTextfield = {
 const Admin = (props) => {
   const token = localStorage.getItem("token");
 
+  const [coffee, setCoffee] = useState("");
+  const [milk, setMilk] = useState("");
+
   useEffect(() => {
     props.coffeeMDP(token);
     props.milkMDP(token);
   }, []);
-
-  const [coffee, setCoffee] = useState("");
-  const [milk, setMilk] = useState("");
 
   const handleCoffeeChange = (e) => {
     setCoffee(e.target.value);
@@ -41,12 +43,24 @@ const Admin = (props) => {
     setMilk(e.target.value);
   };
 
-  const handleCoffeeSubmit = () => {
-    props.addCoffee(token, coffee);
+  const handleCoffeeSubmit = async () => {
+    await props.addCoffee(token, coffee);
+    await props.coffeeMDP(token);
   };
 
-  const handleMilkSubmit = () => {
-    props.addMilk(token, milk);
+  const delCoffee = async (milkId) => {
+    await props.delCoffee(token, milkId);
+    await props.coffeeMDP(token);
+  };
+
+  const handleMilkSubmit = async () => {
+    await props.addMilk(token, milk);
+    await props.milkMDP(token);
+  };
+
+  const delMilk = async (milkId) => {
+    await props.delMilk(token, milkId);
+    await props.milkMDP(token);
   };
 
   if (props.authMSP.userType !== "admin") {
@@ -56,6 +70,7 @@ const Admin = (props) => {
   return (
     <>
       <NavBar />
+      <ToastContainer />
       <h1>Admin</h1>
       <div id="admin-body">
         <div className="with-image">
@@ -82,7 +97,11 @@ const Admin = (props) => {
               <>
                 <div className="delete-items">
                   <h2 className="edit-item-name">{item.name}</h2>
-                  <button className="delete-button" id={item.id}>
+                  <button
+                    className="delete-button"
+                    id={item.id}
+                    onClick={() => delCoffee(item.id)}
+                  >
                     Delete
                   </button>
                 </div>
@@ -113,7 +132,11 @@ const Admin = (props) => {
               <>
                 <div className="delete-items">
                   <h2 className="edit-item-name">{item.type}</h2>
-                  <button className="delete-button" id={item.id}>
+                  <button
+                    className="delete-button"
+                    id={item.id}
+                    onClick={() => delMilk(item.id)}
+                  >
                     Delete
                   </button>
                 </div>
@@ -141,7 +164,10 @@ const mapDispatchToProps = (dispatch) => {
     milkMDP: (token) => dispatch(milkActions.loadMilk(token)),
     addCoffee: (token, coffee) =>
       dispatch(coffeeActions.addCoffee(token, coffee)),
+    delCoffee: (token, coffeeId) =>
+      dispatch(coffeeActions.delCoffee(token, coffeeId)),
     addMilk: (token, milk) => dispatch(milkActions.addMilk(token, milk)),
+    delMilk: (token, milkId) => dispatch(milkActions.delMilk(token, milkId)),
   };
 };
 

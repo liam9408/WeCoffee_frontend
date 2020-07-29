@@ -61,7 +61,11 @@ const Input = ({ type, name, id, onChange, options, ...props }) => {
         </option>
         {options.map((item, index) => (
           <>
-            <option value={item.id + item.name ? item.name : item.type}>
+            <option
+              value={
+                item.name ? `${item.id + item.name}` : `${item.id + item.type}`
+              }
+            >
               {item.name ? item.name : item.type}
             </option>
           </>
