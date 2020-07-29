@@ -1,12 +1,10 @@
 import axios from "axios";
 import { LOGIN, LOGOUT } from "./authActionTypes";
 
-function loginSuccessAction(token, id, userType) {
+function loginSuccessAction(token, userType) {
   return {
     type: LOGIN,
     token: token,
-    //* need id?
-    id: id,
     userType: userType,
   };
 }
@@ -29,11 +27,10 @@ export function loginThunk(username, password) {
         if (response.data.success === 1) {
           // thunk can conditionally dispatch actions
           localStorage.setItem("token", response.data.token);
-
-          //* need id?
-          localStorage.setItem("id", response.data.id);
           localStorage.setItem("userType", response.data.userType);
-          dispatch(loginSuccessAction(response.data.token, response.data.id));
+          dispatch(
+            loginSuccessAction(response.data.token, response.data.userType)
+          );
         } else {
           console.log("failed");
         }
@@ -43,7 +40,6 @@ export function loginThunk(username, password) {
 }
 
 export function signupThunk(username, userType, password) {
-  console.log(username, userType, password);
   return (dispatch) => {
     return axios
       .post(`${process.env.REACT_APP_API_SERVER}/login/signup`, {

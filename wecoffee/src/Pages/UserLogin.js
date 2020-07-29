@@ -85,7 +85,7 @@ const UserLogin = (props) => {
 
 const mapStateToProps = (state) => {
   return {
-    authMSP: state.auth.authRootReducer,
+    authMSP: state.auth,
   };
 };
 

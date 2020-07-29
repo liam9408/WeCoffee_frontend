@@ -36,7 +36,7 @@ const StyledOrderContent = styled.div`
   margin-left: 40px;
   display: flex;
   flex-direction: column;
-  justify-content: flex-start;
+  justify-content: space-between;
   align-items: flex-start;
 
   @media only screen and (min-device-width: 375px) and (max-device-width: 812px) and (-webkit-device-pixel-ratio: 3) and (orientation: portrait) {
@@ -65,13 +65,22 @@ const StyledButton = styled.button`
   height: 200px;
 `;
 
-const OrderCard = ({ type, name, ...props }) => (
+const Time = styled.h4`
+  font-size: 1rem;
+`;
+
+const OrderCard = ({ type, name, time, orderId, onDone, ...props }) => (
   <StyledOrderCard>
     <StyledOrderContent>
-      <h2 className="order-type">{type}</h2>
-      <h4 className="order-name">{name}</h4>
+      <div>
+        <h2 className="order-type">{type}</h2>
+        <h4 className="order-name">{name}</h4>
+      </div>
+      <div>
+        <Time className="order-name">{time}</Time>
+      </div>
     </StyledOrderContent>
-    <StyledButton>Done</StyledButton>
+    <StyledButton onClick={() => onDone(orderId)}>Done</StyledButton>
   </StyledOrderCard>
 );
 

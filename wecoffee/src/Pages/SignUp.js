@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
+import NavBar from "../Components/NavBar";
+import AccessDenied from "./AccessDenied";
 import * as authActions from "../store/actions/auth/authActions";
 
 const inputTextfield = {
@@ -42,8 +44,13 @@ const SignUp = (props) => {
     props.signUpMDP(username, userType, password);
   };
 
+  if (props.authMSP.userType !== "admin") {
+    return <AccessDenied />;
+  }
+
   return (
     <>
+      <NavBar />
       <h3>SignUp</h3>
       <div id="order-body">
         <div id="order-form-container">
@@ -107,7 +114,7 @@ const SignUp = (props) => {
 
 const mapStateToProps = (state) => {
   return {
-    authMSP: state.auth.authRootReducer,
+    authMSP: state.auth,
   };
 };
 

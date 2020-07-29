@@ -355,6 +355,7 @@ select {
   width: 120px;
   height: 3.5rem;
   margin-left: 20px;
+  padding-top: 18px;
 }
 
 .with-image {
@@ -427,6 +428,7 @@ select {
   width: 80px;
   height: 2.5rem;
   margin-left: 20px;
+  padding-top: 12px;
 }
 
 .delete-button:hover {

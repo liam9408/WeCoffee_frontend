@@ -9,6 +9,7 @@ import * as officeActions from "../store/actions/office/officeActions";
 import Input from "../Components/Input";
 import AutoCompleteInput from "../Components/AutoCompleteInput";
 import Select from "../Components/Select";
+import NavBar from "../Components/NavBar";
 
 const inputTextfield = {
   fontFamily: "inherit",
@@ -25,10 +26,12 @@ const inputTextfield = {
 };
 
 const Order = (props) => {
+  const token = localStorage.getItem("token");
+
   useEffect(() => {
-    props.coffeeMDP();
-    props.milkMDP();
-    props.officeMDP();
+    props.coffeeMDP(token);
+    props.milkMDP(token);
+    props.officeMDP(token);
   }, []);
 
   const [name, setName] = useState("");
@@ -68,10 +71,11 @@ const Order = (props) => {
     setOfficeSuggestions(data);
     setOfficeNumber(param);
     if (param.length === 0) {
-      setHidden(true);
+      setHidden(!isHidden);
       resetOfficeSuggestions();
+    } else {
+      setHidden(false);
     }
-    setHidden(false);
   };
 
   const autoCompleteHandleClick = (event) => {
@@ -84,7 +88,6 @@ const Order = (props) => {
   };
 
   const resetOfficeSuggestions = () => {
-    setHidden(true);
     setOfficeSuggestions([]);
   };
 
@@ -104,6 +107,7 @@ const Order = (props) => {
     <>
       {!submitted && (
         <>
+          {props.authMSP.userType === "admin" ? <NavBar /> : null}
           <h1 id="order-title">New Coffee Order</h1>
           <h3>Submit an order below and grab your coffee</h3>
           <div id="order-body">
@@ -175,7 +179,7 @@ const Order = (props) => {
 
 const mapStateToProps = (state) => {
   return {
-    authMSP: state.auth.authRootReducer,
+    authMSP: state.auth,
     coffeeMSP: state.coffee.coffeeRootReducer,
     milkMSP: state.milk.milkRootReducer,
     officeMSP: state.office.officeRootReducer,
@@ -185,9 +189,9 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     verifyMDP: (token) => dispatch(authActions.loginThunk(token)),
-    coffeeMDP: () => dispatch(coffeeActions.loadCoffee()),
-    milkMDP: () => dispatch(milkActions.loadMilk()),
-    officeMDP: () => dispatch(officeActions.loadOffice()),
+    coffeeMDP: (token) => dispatch(coffeeActions.loadCoffee(token)),
+    milkMDP: (token) => dispatch(milkActions.loadMilk(token)),
+    officeMDP: (token) => dispatch(officeActions.loadOffice(token)),
     addOrderMDP: (coffeeId, coffeeName, milkId, milkName, name, officeId) =>
       dispatch(
         coffeeActions.addOrder(

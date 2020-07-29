@@ -1,6 +1,9 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { connect } from "react-redux";
+import axios from "axios";
 import PropTypes from "prop-types";
+import AccessDenied from "./AccessDenied";
+import NavBar from "../Components/NavBar";
 import * as authActions from "../store/actions/auth/authActions";
 import * as milkActions from "../store/actions/milk/milkActions";
 import * as coffeeActions from "../store/actions/coffee/coffeeActions";
@@ -20,15 +23,40 @@ const inputTextfield = {
 };
 
 const Admin = (props) => {
+  const token = localStorage.getItem("token");
+
   useEffect(() => {
-    props.coffeeMDP();
-    props.milkMDP();
+    props.coffeeMDP(token);
+    props.milkMDP(token);
   }, []);
+
+  const [coffee, setCoffee] = useState("");
+  const [milk, setMilk] = useState("");
+
+  const handleCoffeeChange = (e) => {
+    setCoffee(e.target.value);
+  };
+
+  const handleMilkChange = (e) => {
+    setMilk(e.target.value);
+  };
+
+  const handleCoffeeSubmit = () => {
+    props.addCoffee(token, coffee);
+  };
+
+  const handleMilkSubmit = () => {
+    props.addMilk(token, milk);
+  };
+
+  if (props.authMSP.userType !== "admin") {
+    return <AccessDenied />;
+  }
 
   return (
     <>
+      <NavBar />
       <h1>Admin</h1>
-      <div id="spacer"></div>
       <div id="admin-body">
         <div className="with-image">
           <div id="coffee-icon"></div>
@@ -41,9 +69,12 @@ const Admin = (props) => {
                 name="coffee"
                 placeholder="Add Coffee"
                 id="add-coffee-input"
+                onChange={handleCoffeeChange}
               ></input>
             </div>
-            <button className="admin-add-button">Add</button>
+            <button onClick={handleCoffeeSubmit} className="admin-add-button">
+              Add
+            </button>
           </div>
 
           {props.coffeeMSP.map((item, index) => {
@@ -70,9 +101,12 @@ const Admin = (props) => {
                 name="milk"
                 placeholder="Add Milk Type"
                 id="add-milk-input"
+                onChange={handleMilkChange}
               ></input>
             </div>
-            <button className="admin-add-button">Add</button>
+            <button onClick={handleMilkSubmit} className="admin-add-button">
+              Add
+            </button>
           </div>
           {props.milkMSP.map((item, index) => {
             return (
@@ -94,7 +128,7 @@ const Admin = (props) => {
 
 const mapStateToProps = (state) => {
   return {
-    authMSP: state.auth.authRootReducer,
+    authMSP: state.auth,
     coffeeMSP: state.coffee.coffeeRootReducer,
     milkMSP: state.milk.milkRootReducer,
   };
@@ -103,8 +137,11 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     verifyMDP: (token) => dispatch(authActions.loginThunk(token)),
-    coffeeMDP: () => dispatch(coffeeActions.loadCoffee()),
-    milkMDP: () => dispatch(milkActions.loadMilk()),
+    coffeeMDP: (token) => dispatch(coffeeActions.loadCoffee(token)),
+    milkMDP: (token) => dispatch(milkActions.loadMilk(token)),
+    addCoffee: (token, coffee) =>
+      dispatch(coffeeActions.addCoffee(token, coffee)),
+    addMilk: (token, milk) => dispatch(milkActions.addMilk(token, milk)),
   };
 };
 

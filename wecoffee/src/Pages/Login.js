@@ -33,7 +33,8 @@ const Login = (props) => {
     setPassword(e.target.value);
   };
 
-  const handleSubmit = () => {
+  const handleSubmit = (event) => {
+    event.preventDefault();
     props.verifyMDP(username, password);
   };
 
@@ -58,7 +59,7 @@ const Login = (props) => {
               <input
                 className="input-textfield"
                 style={inputTextfield}
-                type="text"
+                type="password"
                 name="office-number"
                 placeholder="Password"
                 id="office-number"
@@ -85,13 +86,14 @@ const Login = (props) => {
 
 const mapStateToProps = (state) => {
   return {
-    authMSP: state.auth.authRootReducer,
+    authMSP: state.auth,
   };
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    verifyMDP: (token) => dispatch(authActions.loginThunk(token)),
+    verifyMDP: (username, password) =>
+      dispatch(authActions.loginThunk(username, password)),
   };
 };
 
