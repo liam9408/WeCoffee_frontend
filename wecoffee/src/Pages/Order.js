@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
+import styled from "styled-components";
+
 import * as authActions from "../store/actions/auth/authActions";
 import * as milkActions from "../store/actions/milk/milkActions";
 import * as coffeeActions from "../store/actions/coffee/coffeeActions";
@@ -24,6 +26,36 @@ const inputTextfield = {
   cursor: "text",
   lineHeight: "30px",
 };
+
+const Title = styled.h1`
+  margin-bottom: 0px;
+`;
+
+const SubText = styled.h3``;
+
+const OrderBody = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+`;
+
+const FormContainer = styled.div`
+  width: 50%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+`;
+
+const Form = styled.form`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+`;
+
+const Link = styled.a``;
 
 const Order = (props) => {
   const token = localStorage.getItem("token");
@@ -112,7 +144,7 @@ const Order = (props) => {
   };
 
   if (open === false) {
-    return <h1>We are not yet open. Please come back later.</h1>;
+    return <Title>We are not yet open. Please come back later.</Title>;
   }
 
   return (
@@ -120,11 +152,11 @@ const Order = (props) => {
       {!submitted && (
         <>
           {props.authMSP.userType === "admin" ? <NavBar /> : null}
-          <h1 id="order-title">New Coffee Order</h1>
-          <h3>Submit an order below and grab your coffee</h3>
-          <div id="order-body">
-            <div id="order-form-container">
-              <form id="form">
+          <Title>New Coffee Order</Title>
+          <SubText>Submit an order below and grab your coffee</SubText>
+          <OrderBody>
+            <FormContainer>
+              <Form>
                 <Input
                   type="text"
                   name="name"
@@ -170,19 +202,19 @@ const Order = (props) => {
                   onClick={handleSubmit}
                   disabled={!isEnabled}
                 ></input>
-              </form>
-            </div>
-          </div>
+              </Form>
+            </FormContainer>
+          </OrderBody>
         </>
       )}
       {submitted && (
         <>
-          <h1>Success!</h1>
-          <h3>
+          <Title>Success!</Title>
+          <SubText>
             Your order has been submitted. Please collect your order on the 20th
             floor.
-          </h3>
-          <a href="/">Place another order</a>
+          </SubText>
+          <Link href="/">Place another order</Link>
         </>
       )}
     </>

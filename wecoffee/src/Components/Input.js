@@ -23,7 +23,7 @@ const StyledInput = styled.input`
 `;
 
 const StyledDiv = styled.div`
-  border: 0.0625rem solid #666;
+  border: 0.0625rem solid #a9a9a9;
   background-color: #fff;
   border-radius: 0.25rem;
   position: relative;

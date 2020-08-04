@@ -31,20 +31,6 @@ export function addOrder(
   name,
   officeId
 ) {
-  console.log(
-    coffeeId,
-    "coffeeId",
-    coffeeName,
-    "coffeeName",
-    milkId,
-    "milkId",
-    milkName,
-    "milkName",
-    name,
-    "name",
-    officeId,
-    "officeId"
-  );
   return (dispatch) => {
     return axios
       .post(`${process.env.REACT_APP_API_SERVER}/orders/add-order`, {

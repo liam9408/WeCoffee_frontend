@@ -5,6 +5,12 @@ import NavBar from "../Components/NavBar";
 import AccessDenied from "./AccessDenied";
 import * as authActions from "../store/actions/auth/authActions";
 
+import styled from "styled-components";
+
+import Input from "../Components/Input";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
 const inputTextfield = {
   fontFamily: "inherit",
   borderRadius: ".25rem;",
@@ -18,6 +24,32 @@ const inputTextfield = {
   cursor: "text",
   lineHeight: "30px",
 };
+
+const Title = styled.h1`
+  margin-bottom: 20px;
+`;
+
+const OrderBody = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+`;
+
+const FormContainer = styled.div`
+  width: 50%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+`;
+
+const Form = styled.form`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+`;
 
 const SignUp = (props) => {
   useEffect(() => {}, []);
@@ -51,29 +83,27 @@ const SignUp = (props) => {
   return (
     <>
       <NavBar />
-      <h3>SignUp</h3>
-      <div id="order-body">
-        <div id="order-form-container">
-          <form id="form">
-            <div className="ray-text-area">
-              <input
-                className="input-textfield"
-                style={inputTextfield}
-                type="text"
-                name="name"
-                placeholder="Username"
-                id="your-name"
-                onChange={handleUsernameChange}
-              ></input>
-            </div>
+      <ToastContainer />
+      <Title>SignUp</Title>
+      <OrderBody>
+        <FormContainer>
+          <Form id="form">
+            <Input
+              className="input-textfield"
+              style={inputTextfield}
+              type="text"
+              name="name"
+              placeholder="Username"
+              id="your-name"
+              onChange={handleUsernameChange}
+            />
             <div className="ray-text-area">
               <select
-                className="input-textfield"
                 style={inputTextfield}
                 type="text"
                 name="usertype"
                 placeholder="User Type"
-                id="your-name"
+                id="user-type"
                 onChange={handleUserTypeChange}
               >
                 <option value="coffee1" disabled selected>
@@ -83,17 +113,25 @@ const SignUp = (props) => {
                 <option value="coffee1">Barista</option>
               </select>
             </div>
-            <div className="ray-text-area" id="autocomplete-container">
-              <input
-                className="input-textfield"
-                style={inputTextfield}
-                type="text"
-                name="office-number"
-                placeholder="Password"
-                id="office-number"
-                onChange={handlePasswordChange}
-              ></input>
-            </div>
+            {/* <Select
+              className="input-textfield"
+              style={inputTextfield}
+              type="text"
+              name="usertype"
+              placeholder="User Type"
+              id="user-type"
+              options={}
+              onChange={handleUserTypeChange}
+            /> */}
+            <Input
+              className="input-textfield"
+              style={inputTextfield}
+              type="password"
+              name="office-number"
+              placeholder="Password"
+              id="office-number"
+              onChange={handlePasswordChange}
+            />
             <input
               id={
                 !isEnabled
@@ -105,9 +143,9 @@ const SignUp = (props) => {
               onClick={handleSubmit}
               disabled={!isEnabled}
             ></input>
-          </form>
-        </div>
-      </div>
+          </Form>
+        </FormContainer>
+      </OrderBody>
     </>
   );
 };

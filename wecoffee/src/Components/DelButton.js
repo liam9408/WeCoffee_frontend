@@ -1,0 +1,37 @@
+import React from "react";
+import styled, { css } from "styled-components";
+
+const styles = css`
+    font-size: 0.8rem;
+    font-weight: 400;
+    line-height: 1;
+    display: flex;
+    border: 0.0625rem solid red;
+    font-family: "Apercu Mono", SFMono-Regular, Menlo, Monaco, Consolas,
+    "Liberation Mono", "Courier New", monospace;
+    background-color: white;
+    color: red;
+    border-radius: 0.25rem;
+    cursor: pointer;
+    padding-left: 17px;
+    white-space: nowrap;
+    text-align: center !important;
+    vertical-align: bottom;
+    width: 80px;
+    height: 2.5rem;
+    margin-left: 20px;
+    padding-top: 12px;
+
+    :hover {
+    background-color: rgba(255, 0, 0, 0.226);
+`;
+
+const StyledButton = styled.button`
+  ${styles}
+`;
+
+const DelButton = ({ children, ...props }) => {
+  return <StyledButton {...props}> {children} </StyledButton>;
+};
+
+export default DelButton;

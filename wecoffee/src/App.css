@@ -107,7 +107,7 @@ p {
 }
 
 .ray-text-area {
-  border: 0.0625rem solid #666;
+  border: 0.0625rem solid #a9a9a9;
   background-color: #fff;
   border-radius: 0.25rem;
   position: relative;
@@ -378,6 +378,14 @@ select {
   width: 100px;
   height: 100px;
   background-image: url("./images/milk.png");
+  background-size: contain;
+  margin-bottom: 30px;
+}
+
+#user-icon {
+  width: 100px;
+  height: 100px;
+  background-image: url("./images/user.png");
   background-size: contain;
   margin-bottom: 30px;
 }

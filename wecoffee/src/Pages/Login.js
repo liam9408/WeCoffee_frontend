@@ -2,6 +2,9 @@ import React, { useEffect, useState } from "react";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import * as authActions from "../store/actions/auth/authActions";
+import styled from "styled-components";
+
+import Input from "../Components/Input";
 
 const inputTextfield = {
   fontFamily: "inherit",
@@ -16,6 +19,32 @@ const inputTextfield = {
   cursor: "text",
   lineHeight: "30px",
 };
+
+const Title = styled.h1`
+  margin-bottom: 20px;
+`;
+
+const OrderBody = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+`;
+
+const FormContainer = styled.div`
+  width: 50%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+`;
+
+const Form = styled.form`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+`;
 
 const Login = (props) => {
   useEffect(() => {}, []);
@@ -40,32 +69,28 @@ const Login = (props) => {
 
   return (
     <>
-      <h3>Login</h3>
-      <div id="order-body">
-        <div id="order-form-container">
-          <form id="form">
-            <div className="ray-text-area">
-              <input
-                className="input-textfield"
-                style={inputTextfield}
-                type="text"
-                name="name"
-                placeholder="Username"
-                id="your-name"
-                onChange={handleUsernameChange}
-              ></input>
-            </div>
-            <div className="ray-text-area" id="autocomplete-container">
-              <input
-                className="input-textfield"
-                style={inputTextfield}
-                type="password"
-                name="office-number"
-                placeholder="Password"
-                id="office-number"
-                onChange={handlePasswordChange}
-              ></input>
-            </div>
+      <Title>Login</Title>
+      <OrderBody>
+        <FormContainer>
+          <Form id="form">
+            <Input
+              className="input-textfield"
+              style={inputTextfield}
+              type="text"
+              name="name"
+              placeholder="Username"
+              id="your-name"
+              onChange={handleUsernameChange}
+            />
+            <Input
+              className="input-textfield"
+              style={inputTextfield}
+              type="password"
+              name="office-number"
+              placeholder="Password"
+              id="office-number"
+              onChange={handlePasswordChange}
+            />
             <input
               id={
                 !isEnabled
@@ -77,9 +102,9 @@ const Login = (props) => {
               onClick={handleSubmit}
               disabled={!isEnabled}
             ></input>
-          </form>
-        </div>
-      </div>
+          </Form>
+        </FormContainer>
+      </OrderBody>
     </>
   );
 };

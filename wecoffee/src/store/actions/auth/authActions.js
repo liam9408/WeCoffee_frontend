@@ -1,5 +1,6 @@
 import axios from "axios";
 import { LOGIN, LOGOUT } from "./authActionTypes";
+import { toast } from "react-toastify";
 
 function loginSuccessAction(token, userType) {
   return {
@@ -48,9 +49,9 @@ export function signupThunk(username, userType, password) {
         password: password,
       })
       .then((response) => {
+        toast.success("Added User");
         if (response.data.success === 1) {
-          // thunk can conditionally dispatch action
-          dispatch(loginThunk(username, password));
+          // dispatch(loginThunk(username, password));
         }
       })
       .catch((err) => console.log("Error: ", err));

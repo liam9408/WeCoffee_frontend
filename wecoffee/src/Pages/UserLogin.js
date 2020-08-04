@@ -2,6 +2,9 @@ import React, { useEffect, useState } from "react";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import * as authActions from "../store/actions/auth/authActions";
+import styled from "styled-components";
+
+import Input from "../Components/Input";
 
 const inputTextfield = {
   fontFamily: "inherit",
@@ -17,7 +20,33 @@ const inputTextfield = {
   lineHeight: "30px",
 };
 
-const UserLogin = (props) => {
+const Title = styled.h1`
+  margin-bottom: 20px;
+`;
+
+const OrderBody = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+`;
+
+const FormContainer = styled.div`
+  width: 50%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+`;
+
+const Form = styled.form`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+`;
+
+const Login = (props) => {
   useEffect(() => {}, []);
 
   const [username, setUsername] = useState("");
@@ -33,38 +62,35 @@ const UserLogin = (props) => {
     setPassword(e.target.value);
   };
 
-  const handleSubmit = () => {
+  const handleSubmit = (event) => {
+    event.preventDefault();
     props.verifyMDP(username, password);
   };
 
   return (
     <>
-      <h3>Login</h3>
-      <div id="order-body">
-        <div id="order-form-container">
-          <form id="form">
-            <div className="ray-text-area">
-              <input
-                className="input-textfield"
-                style={inputTextfield}
-                type="text"
-                name="name"
-                placeholder="Username"
-                id="your-name"
-                onChange={handleUsernameChange}
-              ></input>
-            </div>
-            <div className="ray-text-area" id="autocomplete-container">
-              <input
-                className="input-textfield"
-                style={inputTextfield}
-                type="text"
-                name="office-number"
-                placeholder="Password"
-                id="office-number"
-                onChange={handlePasswordChange}
-              ></input>
-            </div>
+      <Title>Login</Title>
+      <OrderBody>
+        <FormContainer>
+          <Form id="form">
+            <Input
+              className="input-textfield"
+              style={inputTextfield}
+              type="text"
+              name="name"
+              placeholder="Username"
+              id="your-name"
+              onChange={handleUsernameChange}
+            />
+            <Input
+              className="input-textfield"
+              style={inputTextfield}
+              type="password"
+              name="office-number"
+              placeholder="Password"
+              id="office-number"
+              onChange={handlePasswordChange}
+            />
             <input
               id={
                 !isEnabled
@@ -76,9 +102,9 @@ const UserLogin = (props) => {
               onClick={handleSubmit}
               disabled={!isEnabled}
             ></input>
-          </form>
-        </div>
-      </div>
+          </Form>
+        </FormContainer>
+      </OrderBody>
     </>
   );
 };
@@ -91,12 +117,13 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    verifyMDP: (token) => dispatch(authActions.loginThunk(token)),
+    verifyMDP: (username, password) =>
+      dispatch(authActions.loginThunk(username, password)),
   };
 };
 
-UserLogin.propTypes = {
+Login.propTypes = {
   className: PropTypes.string,
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(UserLogin);
+export default connect(mapStateToProps, mapDispatchToProps)(Login);
