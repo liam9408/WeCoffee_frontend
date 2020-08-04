@@ -6,6 +6,7 @@ import AccessDenied from "./AccessDenied";
 import NavBar from "../Components/NavBar";
 import DelButton from "../Components/DelButton";
 import AddButton from "../Components/AddButton";
+import ApproveButton from "../Components/ApproveButton";
 import Input from "../Components/Input";
 import * as authActions from "../store/actions/auth/authActions";
 import * as milkActions from "../store/actions/milk/milkActions";
@@ -321,14 +322,16 @@ const Admin = (props) => {
           return (
             <>
               <ItemsContainer className="delete-items">
-                <ItemName className="edit-item-name">{item.username}</ItemName>
-                <DelButton
+                <ItemName className="edit-item-name">
+                  {item.username} - {item.user_type}
+                </ItemName>
+                <ApproveButton
                   className="delete-button"
                   id={item.id}
                   onClick={() => approveUser(item.id)}
                 >
                   Approve
-                </DelButton>
+                </ApproveButton>
               </ItemsContainer>
             </>
           );
