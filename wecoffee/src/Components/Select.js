@@ -1,26 +1,5 @@
 import React from "react";
-import styled, { css } from "styled-components";
-
-const styles = css`
-  font-family: inherit;
-  border-radius: 0.25rem;
-  width: 100%;
-  fontsize: 1rem;
-  display: block;
-  background-color: transparent;
-  padding: 0.6875rem;
-  outline: 0;
-  border: 0;
-  cursor: text;
-  line-height: 30px;
-  -webkit-appearance: none;
-  -moz-appearance: none;
-  appearance: none;
-`;
-
-const StyledInput = styled.input`
-  ${styles}
-`;
+import styled from "styled-components";
 
 const StyledDiv = styled.div`
   border: 0.0625rem solid #666;

@@ -23,7 +23,7 @@ const styles = css`
     padding-top: 12px;
 
     :hover {
-    background-color: rgba(255, 0, 0, 0.226);
+    background-color: rgba(0, 0, 255, 0.226);
 `;
 
 const StyledButton = styled.button`

@@ -1,5 +1,5 @@
 import React from "react";
-import styled, { css } from "styled-components";
+import styled from "styled-components";
 
 const StyledOrderCard = styled.div`
   -webkit-box-flex: 1;

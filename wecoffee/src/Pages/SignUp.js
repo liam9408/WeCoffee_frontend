@@ -106,23 +106,13 @@ const SignUp = (props) => {
                 id="user-type"
                 onChange={handleUserTypeChange}
               >
-                <option value="coffee1" disabled selected>
+                <option value="default" disabled selected>
                   Choose usertype
                 </option>
-                <option value="coffee1">Admin</option>
-                <option value="coffee1">Barista</option>
+                <option value="admin">Admin</option>
+                <option value="barista">Barista</option>
               </select>
             </div>
-            {/* <Select
-              className="input-textfield"
-              style={inputTextfield}
-              type="text"
-              name="usertype"
-              placeholder="User Type"
-              id="user-type"
-              options={}
-              onChange={handleUserTypeChange}
-            /> */}
             <Input
               className="input-textfield"
               style={inputTextfield}

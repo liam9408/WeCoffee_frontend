@@ -173,7 +173,7 @@ const Admin = (props) => {
 
   const [coffee, setCoffee] = useState("");
   const [milk, setMilk] = useState("");
-  const [users, setUsers] = useState([]);
+  const [users, setUsers] = useState([{ username: "no pending users" }]);
 
   const loadUsers = (token) => {
     return axios(`${process.env.REACT_APP_API_SERVER}/login/approve`, {
@@ -249,12 +249,11 @@ const Admin = (props) => {
       <NavBar />
       <ToastContainer />
       <Title>Admin</Title>
-      <AdminBody id="admin-body">
-        <WithImage className="with-image">
+      <AdminBody>
+        <WithImage>
           <div id="coffee-icon"></div>
           <StyledContainer>
             <Input
-              className="input-textfield"
               style={inputTextfield}
               type="text"
               name="coffee"
@@ -268,13 +267,9 @@ const Admin = (props) => {
           {props.coffeeMSP.map((item, index) => {
             return (
               <>
-                <ItemsContainer className="delete-items">
-                  <ItemName className="edit-item-name">{item.name}</ItemName>
-                  <DelButton
-                    className="delete-button"
-                    id={item.id}
-                    onClick={() => delCoffee(item.id)}
-                  >
+                <ItemsContainer>
+                  <ItemName>{item.name}</ItemName>
+                  <DelButton id={item.id} onClick={() => delCoffee(item.id)}>
                     Delete
                   </DelButton>
                 </ItemsContainer>
@@ -286,7 +281,6 @@ const Admin = (props) => {
           <div id="milk-icon"></div>
           <StyledContainer>
             <Input
-              className="input-textfield"
               style={inputTextfield}
               type="text"
               name="milk"
@@ -299,13 +293,9 @@ const Admin = (props) => {
           {props.milkMSP.map((item, index) => {
             return (
               <>
-                <ItemsContainer className="delete-items">
-                  <ItemName className="edit-item-name">{item.type}</ItemName>
-                  <DelButton
-                    className="delete-button"
-                    id={item.id}
-                    onClick={() => delMilk(item.id)}
-                  >
+                <ItemsContainer>
+                  <ItemName>{item.type}</ItemName>
+                  <DelButton id={item.id} onClick={() => delMilk(item.id)}>
                     Delete
                   </DelButton>
                 </ItemsContainer>
@@ -315,23 +305,25 @@ const Admin = (props) => {
         </WithImage>
       </AdminBody>
 
-      <WithImage className="with-image">
+      <WithImage>
         <div id="user-icon"></div>
         <Title>Pending Users</Title>
         {users.map((item, index) => {
+          console.log(item);
           return (
             <>
-              <ItemsContainer className="delete-items">
-                <ItemName className="edit-item-name">
+              <ItemsContainer>
+                <ItemName>
                   {item.username} - {item.user_type}
                 </ItemName>
-                <ApproveButton
-                  className="delete-button"
-                  id={item.id}
-                  onClick={() => approveUser(item.id)}
-                >
-                  Approve
-                </ApproveButton>
+                {item.username === "no pending users" ? null : (
+                  <ApproveButton
+                    id={item.id}
+                    onClick={() => approveUser(item.id)}
+                  >
+                    Approve
+                  </ApproveButton>
+                )}
               </ItemsContainer>
             </>
           );
