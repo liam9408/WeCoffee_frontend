@@ -25,6 +25,8 @@ const Barista = (props) => {
         updateCoffeeList(orders);
       })
       .catch((err) => {
+        alert("Your session has expired, please sign in again");
+        localStorage.clear("token");
         console.error(err);
       });
   };

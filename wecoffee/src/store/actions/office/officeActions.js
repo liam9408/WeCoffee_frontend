@@ -21,6 +21,8 @@ export function loadOffice(token) {
         dispatch(refreshOfficeThunk(res.data));
       })
       .catch((err) => {
+        alert("Your session has expired, please sign in again");
+        localStorage.clear("token");
         console.error(err);
       });
   };

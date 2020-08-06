@@ -18,6 +18,8 @@ export function loadMilk(token) {
         dispatch(refreshMilkThunk(res.data));
       })
       .catch((err) => {
+        alert("Your session has expired, please sign in again");
+        localStorage.clear("token");
         console.error(err);
       });
   };
