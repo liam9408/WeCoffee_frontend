@@ -12,21 +12,52 @@ import Signup from "./Pages/SignUp";
 import * as authActions from "../src/store/actions/auth/authActions";
 
 const Routes = (props) => {
-  // console.log(props.authMSP);
-  if (props.authMSP.isLoggedIn) {
-    return (
-      <Switch>
-        <Redirect exact from="/" to="/order" />
-        <Route exact path="/order" component={Order} />
-        <Route exact path="/login" component={Login} />
-        <Route exact path="/barista" component={Barista} />
-        <Route exact path="/admin" component={Admin} />
-        <Route exact path="/SignUp" component={Signup} />
-        <Route exact path="/us3rl0g1n" component={UserLogin} />
-        <Route path="*" component={NotFound} />
-        <Redirect to="*" />
-      </Switch>
-    );
+  const auth = props.authMSP;
+  if (auth.isLoggedIn) {
+    if (auth.userType === "admin") {
+      return (
+        <Switch>
+          <Redirect exact from="/" to="/order" />
+          <Route exact path="/order" component={Order} />
+          <Route exact path="/login" component={Login} />
+          <Route exact path="/barista" component={Barista} />
+          <Route exact path="/admin" component={Admin} />
+          <Route exact path="/SignUp" component={Signup} />
+          <Route exact path="/us3rl0g1n" component={UserLogin} />
+          <Route path="*" component={NotFound} />
+          <Redirect to="*" />
+        </Switch>
+      );
+    }
+    if (auth.userType === "barista") {
+      return (
+        <Switch>
+          <Redirect exact from="/" to="/barista" />
+          <Route exact path="/order" component={Order} />
+          <Route exact path="/login" component={Login} />
+          <Route exact path="/barista" component={Barista} />
+          <Route exact path="/admin" component={Admin} />
+          <Route exact path="/SignUp" component={Signup} />
+          <Route exact path="/us3rl0g1n" component={UserLogin} />
+          <Route path="*" component={NotFound} />
+          <Redirect to="*" />
+        </Switch>
+      );
+    } else {
+      return (
+        <Switch>
+          <Redirect exact from="/" to="/order" />
+          <Route exact path="/order" component={Order} />
+          <Route exact path="/login" component={Login} />
+          <Route exact path="/barista" component={Barista} />
+          <Route exact path="/admin" component={Admin} />
+          <Route exact path="/SignUp" component={Signup} />
+          <Route exact path="/us3rl0g1n" component={UserLogin} />
+          <Route path="*" component={NotFound} />
+          <Redirect to="*" />
+        </Switch>
+      );
+    }
   } else {
     return (
       <>
@@ -37,6 +68,31 @@ const Routes = (props) => {
       </>
     );
   }
+
+  // if (props.authMSP.isLoggedIn) {
+  //   return (
+  //     <Switch>
+  //       <Redirect exact from="/" to="/order" />
+  //       <Route exact path="/order" component={Order} />
+  //       <Route exact path="/login" component={Login} />
+  //       <Route exact path="/barista" component={Barista} />
+  //       <Route exact path="/admin" component={Admin} />
+  //       <Route exact path="/SignUp" component={Signup} />
+  //       <Route exact path="/us3rl0g1n" component={UserLogin} />
+  //       <Route path="*" component={NotFound} />
+  //       <Redirect to="*" />
+  //     </Switch>
+  //   );
+  // } else {
+  //   return (
+  //     <>
+  //       <Switch>
+  //         <Route exact path="/login" component={Login} />
+  //       </Switch>
+  //       <Redirect to="/login" />
+  //     </>
+  //   );
+  // }
 
   // if isLoggedIn allow access to pages
   // check userType and render corresponding pages

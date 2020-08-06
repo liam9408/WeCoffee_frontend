@@ -19,12 +19,14 @@ export function logoutAction() {
 
 export function loginThunk(username, password) {
   return (dispatch) => {
+    console.log(username, password);
     return axios
       .post(`${process.env.REACT_APP_API_SERVER}/login/login`, {
         username: username,
         password: password,
       })
       .then((response) => {
+        console.log(response, "<<< res");
         if (response.data.success === 1) {
           // thunk can conditionally dispatch actions
           localStorage.setItem("token", response.data.token);
@@ -32,6 +34,7 @@ export function loginThunk(username, password) {
           dispatch(
             loginSuccessAction(response.data.token, response.data.userType)
           );
+          window.location.href = "/";
         } else {
           console.log("failed");
         }
