@@ -19,7 +19,6 @@ export function logoutAction() {
 
 export function loginThunk(username, password) {
   return (dispatch) => {
-    console.log(process.env.REACT_APP_API_SERVER);
     return axios
       .post(`${process.env.REACT_APP_API_SERVER}/login/login`, {
         username: username,
@@ -60,3 +59,4 @@ export function signupThunk(username, userType, password) {
       .catch((err) => console.log("Error: ", err));
   };
 }
+

@@ -1,6 +1,6 @@
-import axios from "axios";
-import * as coffeeActionTypes from "./coffeeActionTypes";
-import { toast } from "react-toastify";
+import axios from 'axios';
+import * as coffeeActionTypes from './coffeeActionTypes';
+import { toast } from 'react-toastify';
 
 export function refreshCoffeeThunk(coffee) {
   return {
@@ -18,8 +18,8 @@ export function loadCoffee(token) {
         dispatch(refreshCoffeeThunk(res.data));
       })
       .catch((err) => {
-        alert("Your session has expired, please sign in again");
-        localStorage.clear("token");
+        localStorage.clear('token');
+        window.location='/denied'
         console.error(err);
       });
   };
@@ -32,23 +32,29 @@ export function addOrder(
   milkName,
   name,
   officeId,
-  cupId
+  cupId,
+  token
 ) {
   return (dispatch) => {
-    return axios
-      .post(`${process.env.REACT_APP_API_SERVER}/orders/add-order`, {
-        coffeeId: coffeeId,
-        coffeeName: coffeeName,
-        milkId: milkId,
-        milkName: milkName,
-        name: name,
-        officeId: officeId,
-        cupId: cupId,
-      })
+    return axios(`${process.env.REACT_APP_API_SERVER}/orders/add-order`, {
+      method: 'post',
+      headers: { Authorization: `${token}` },
+      data: {
+        coffeeId,
+        coffeeName,
+        milkId,
+        milkName,
+        name,
+        officeId,
+        cupId,
+      },
+    })
       .then((res) => {
-        console.log(res);
+        // console.log(res);
       })
       .catch((err) => {
+        localStorage.clear('token');
+        window.location='/denied'
         console.error(err);
       });
   };
@@ -57,7 +63,7 @@ export function addOrder(
 export function addCoffee(token, coffee) {
   return (dispatch) => {
     return axios({
-      method: "post",
+      method: 'post',
       url: `${process.env.REACT_APP_API_SERVER}/menu/add-coffee/`,
       data: { coffeeName: `${coffee}` },
       headers: {
@@ -65,7 +71,7 @@ export function addCoffee(token, coffee) {
       },
     })
       .then((res) => {
-        toast.success("Added Coffee");
+        toast.success('Added Coffee');
       })
       .catch((err) => {
         console.error(err);
@@ -76,7 +82,7 @@ export function addCoffee(token, coffee) {
 export function delCoffee(token, coffeeId) {
   return (dispatch) => {
     return axios({
-      method: "delete",
+      method: 'delete',
       url: `${process.env.REACT_APP_API_SERVER}/menu/del-coffee/`,
       data: { coffeeId: coffeeId },
       headers: {
@@ -84,7 +90,7 @@ export function delCoffee(token, coffeeId) {
       },
     })
       .then((res) => {
-        toast.success("Deleted Coffee");
+        toast.success('Deleted Coffee');
       })
       .catch((err) => {
         console.error(err);

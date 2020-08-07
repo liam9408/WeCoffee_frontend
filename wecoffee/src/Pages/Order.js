@@ -60,11 +60,11 @@ const Link = styled.a``;
 const cupOptions = [
   {
     id: 0,
-    name: "Own Cup",
+    name: "I have my own mug!",
   },
   {
     id: 1,
-    name: "Company Cup",
+    name: "Oops! I'll bring my own next time!",
   },
 ];
 
@@ -109,7 +109,7 @@ const Order = (props) => {
     const milkType = milk.slice(1, milk.length);
     const cupId = parseInt(cup[0]);
     setSubmitted(true);
-    console.log(cupId);
+    console.log(token);
     props.addOrderMDP(
       coffeeId,
       coffeeName,
@@ -117,7 +117,8 @@ const Order = (props) => {
       milkType,
       name,
       officeId,
-      cupId
+      cupId,
+      token
     );
   };
 
@@ -266,7 +267,7 @@ const mapDispatchToProps = (dispatch) => {
     coffeeMDP: (token) => dispatch(coffeeActions.loadCoffee(token)),
     milkMDP: (token) => dispatch(milkActions.loadMilk(token)),
     officeMDP: (token) => dispatch(officeActions.loadOffice(token)),
-    addOrderMDP: (coffeeId, coffeeName, milkId, milkName, name, officeId) =>
+    addOrderMDP: (coffeeId, coffeeName, milkId, milkName, name, officeId, cupId, token) =>
       dispatch(
         coffeeActions.addOrder(
           coffeeId,
@@ -274,7 +275,9 @@ const mapDispatchToProps = (dispatch) => {
           milkId,
           milkName,
           name,
-          officeId
+          officeId,
+          cupId,
+          token
         )
       ),
   };

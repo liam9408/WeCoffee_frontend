@@ -3,6 +3,7 @@ import { Switch, Redirect, Route } from "react-router-dom";
 import { connect } from "react-redux";
 import Order from "./Pages/Order";
 import NotFound from "./Pages/NotFound";
+import AccessDenied from "./Pages/AccessDenied"
 import Barista from "./Pages/Barista";
 import Admin from "./Pages/Admin";
 import Login from "./Pages/Login";
@@ -14,6 +15,7 @@ import * as authActions from "../src/store/actions/auth/authActions";
 const Routes = (props) => {
   const auth = props.authMSP;
   if (auth.isLoggedIn) {
+    console.log('I am in', auth)
     if (auth.userType === "admin") {
       return (
         <Switch>
@@ -47,6 +49,7 @@ const Routes = (props) => {
       return (
         <Switch>
           <Redirect exact from="/" to="/order" />
+          <Route exact path="/denied" component={AccessDenied} />
           <Route exact path="/order" component={Order} />
           <Route exact path="/login" component={Login} />
           <Route exact path="/barista" component={Barista} />
@@ -60,13 +63,14 @@ const Routes = (props) => {
     }
   } else {
     return (
-      <>
-        <Switch>
-          <Route exact path="/login" component={Login} />
-          <Route exact path="/us3rl0g1n" component={UserLogin} />
-        </Switch>
-        <Redirect to="/us3rl0g1n" />
-      </>
+      <Switch>
+        <Redirect exact from="/" to="/login" />
+        <Route exact path="/denied" component={AccessDenied} />
+        <Route exact path="/login" component={Login} />
+        <Route exact path="/us3rl0g1n" component={UserLogin} />
+        <Route path="*" component={NotFound} />
+        <Redirect to="*" />
+      </Switch>
     );
   }
 
