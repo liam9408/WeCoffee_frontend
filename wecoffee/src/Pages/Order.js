@@ -103,15 +103,22 @@ const Order = (props) => {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    const name = document.getElementById("your-name").value;
-    const coffee = document.getElementById("coffee").value;
-    const milk = document.getElementById("milk").value;
     const coffeeId = parseInt(coffee[0]);
     const coffeeName = coffee.slice(1, coffee.length);
     const milkId = parseInt(milk[0]);
     const milkType = milk.slice(1, milk.length);
+    const cupId = parseInt(cup[0]);
     setSubmitted(true);
-    props.addOrderMDP(coffeeId, coffeeName, milkId, milkType, name, officeId);
+    console.log(cupId);
+    props.addOrderMDP(
+      coffeeId,
+      coffeeName,
+      milkId,
+      milkType,
+      name,
+      officeId,
+      cupId
+    );
   };
 
   const handleOfficeChange = (e) => {

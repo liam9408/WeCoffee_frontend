@@ -31,7 +31,8 @@ export function addOrder(
   milkId,
   milkName,
   name,
-  officeId
+  officeId,
+  cupId
 ) {
   return (dispatch) => {
     return axios
@@ -42,6 +43,7 @@ export function addOrder(
         milkName: milkName,
         name: name,
         officeId: officeId,
+        cupId: cupId,
       })
       .then((res) => {
         console.log(res);
