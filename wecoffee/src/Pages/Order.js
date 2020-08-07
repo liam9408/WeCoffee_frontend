@@ -57,6 +57,17 @@ const Form = styled.form`
 
 const Link = styled.a``;
 
+const cupOptions = [
+  {
+    id: 0,
+    name: "Own Cup",
+  },
+  {
+    id: 1,
+    name: "Company Cup",
+  },
+];
+
 const Order = (props) => {
   const token = localStorage.getItem("token");
 
@@ -71,6 +82,7 @@ const Order = (props) => {
   const [officeNumber, setOfficeNumber] = useState("");
   const [coffee, setCoffee] = useState("");
   const [milk, setMilk] = useState("");
+  const [cup, setCup] = useState("");
   const [officeSuggestions, setOfficeSuggestions] = useState([]);
   const [submitted, setSubmitted] = useState(false);
   const [isHidden, setHidden] = useState(true);
@@ -143,6 +155,10 @@ const Order = (props) => {
     setName(e.target.value);
   };
 
+  const handleCupChange = (e) => {
+    setCup(e.target.value);
+  };
+
   if (open === false) {
     return <Title>We are not yet open. Please come back later.</Title>;
   }
@@ -190,6 +206,13 @@ const Order = (props) => {
                   id="milk"
                   onChange={handleMilkChange}
                   options={props.milkMSP}
+                />
+                <Select
+                  type="text"
+                  name="cup"
+                  id="cup"
+                  onChange={handleCupChange}
+                  options={cupOptions}
                 />
                 <input
                   id={

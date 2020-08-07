@@ -305,7 +305,7 @@ const Admin = (props) => {
         </WithImage>
       </AdminBody>
 
-      <WithImage>
+      {/* <WithImage>
         <div id="user-icon"></div>
         <Title>Pending Users</Title>
         {users.map((item, index) => {
@@ -328,7 +328,7 @@ const Admin = (props) => {
             </>
           );
         })}
-      </WithImage>
+      </WithImage> */}
     </>
   );
 };
