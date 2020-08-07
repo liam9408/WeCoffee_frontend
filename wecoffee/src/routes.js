@@ -63,8 +63,9 @@ const Routes = (props) => {
       <>
         <Switch>
           <Route exact path="/login" component={Login} />
+          <Route exact path="/us3rl0g1n" component={UserLogin} />
         </Switch>
-        <Redirect to="/login" />
+        <Redirect to="/us3rl0g1n" />
       </>
     );
   }
