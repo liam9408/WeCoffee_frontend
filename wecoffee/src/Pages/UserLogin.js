@@ -47,7 +47,10 @@ const Form = styled.form`
 `;
 
 const Login = (props) => {
-  useEffect(() => {}, []);
+  useEffect(() => {
+    console.log('hello')
+    autoLogin('weworkcoffeedrinker2020','superWewOrkCofeeDrinker2020')
+  }, []);
 
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
@@ -61,6 +64,10 @@ const Login = (props) => {
   const handlePasswordChange = (e) => {
     setPassword(e.target.value);
   };
+
+  const autoLogin = (username, password) =>{
+    props.verifyMDP(username, password);
+  }
 
   const handleSubmit = (event) => {
     event.preventDefault();
