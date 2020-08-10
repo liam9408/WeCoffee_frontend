@@ -15,7 +15,6 @@ import * as authActions from "../src/store/actions/auth/authActions";
 const Routes = (props) => {
   const auth = props.authMSP;
   if (auth.isLoggedIn) {
-    console.log('I am in', auth)
     if (auth.userType === "admin") {
       return (
         <Switch>

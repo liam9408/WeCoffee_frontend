@@ -164,7 +164,11 @@ const Order = (props) => {
   };
 
   const handleCupChange = (e) => {
-    setCup(e.target.value);
+    if (e.target.value === 0) {
+      setCup(false);
+    } else {
+      setCup(true);
+    }
   };
 
   if (open === false) {
@@ -267,7 +271,16 @@ const mapDispatchToProps = (dispatch) => {
     coffeeMDP: (token) => dispatch(coffeeActions.loadCoffee(token)),
     milkMDP: (token) => dispatch(milkActions.loadMilk(token)),
     officeMDP: (token) => dispatch(officeActions.loadOffice(token)),
-    addOrderMDP: (coffeeId, coffeeName, milkId, milkName, name, officeId, cupId, token) =>
+    addOrderMDP: (
+      coffeeId,
+      coffeeName,
+      milkId,
+      milkName,
+      name,
+      officeId,
+      cupId,
+      token
+    ) =>
       dispatch(
         coffeeActions.addOrder(
           coffeeId,
